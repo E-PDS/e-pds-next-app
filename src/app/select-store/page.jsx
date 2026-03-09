@@ -1,5 +1,6 @@
 "use client";
 import React, { useState } from "react";
+import { useRouter } from "next/navigation";
 import "./page.scss";
 
 const Store = ({ size=24, className="" }) => (
@@ -37,6 +38,11 @@ const SUPPLYCO_STORES = [
 
 export default function SelectStore() {
     const [selectedCategory, setSelectedCategory] = useState(null);
+    const router = useRouter();
+
+    const handleSelectStore = (storeId) => {
+        router.push('/products');
+    };
 
     const renderStoreList = (stores) => {
         return (
@@ -55,7 +61,7 @@ export default function SelectStore() {
                         </div>
                         <div className="store-action">
                             <span className="status-badge">{store.status}</span>
-                            <button className="select-btn" disabled={store.status === 'Closed'}>
+                            <button className="select-btn" disabled={store.status === 'Closed'} onClick={() => handleSelectStore(store.id)}>
                                 Select <ArrowRight size={16} />
                             </button>
                         </div>
