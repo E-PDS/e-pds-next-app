@@ -1,0 +1,412 @@
+// Apply the exact colors from RULES.md
+$bg-slate-50: #f8fafc;
+$card-bg: #ffffff;
+$hover-slate: #f1f5f9;
+$border-light: #e2e8f0;
+$border-medium: #cbd5e1;
+
+$text-dark: #0f172a;
+$text-body: #64748b;
+$text-muted: #94a3b8;
+
+$brand-accent-glow: #3b82f6; // Blue 500
+$brand-bg: #eff6ff; // Blue 50
+
+$error-text: #b91c1c;
+$error-bg: #fee2e2;
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideInRight {
+  from { opacity: 0; transform: translateX(20px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes pulseGlow {
+  0% { box-shadow: 0 0 15px rgba($brand-accent-glow, 0.4); }
+  50% { box-shadow: 0 0 25px rgba($brand-accent-glow, 0.7); }
+  100% { box-shadow: 0 0 15px rgba($brand-accent-glow, 0.4); }
+}
+
+.login-page-container {
+  min-height: 100vh;
+  background-color: $bg-slate-50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  color: $text-dark;
+  padding: 24px;
+}
+
+.login-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  width: 100%;
+  max-width: 1200px;
+  background: $card-bg;
+  border-radius: 24px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05), 0 1px 3px rgba(0,0,0,0.05);
+  overflow: hidden;
+  
+  @media (min-width: 900px) {
+    grid-template-columns: 5fr 7fr;
+    min-height: 700px;
+  }
+}
+
+.login-form-panel {
+  padding: 48px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background: $card-bg;
+  animation: fadeIn 0.6s ease-out forwards;
+  
+  @media (max-width: 600px) {
+    padding: 32px 24px;
+  }
+}
+
+.login-form-wrapper {
+  max-width: 420px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.login-header {
+  margin-bottom: 40px;
+  text-align: center;
+  
+  .login-logo-container {
+    width: 72px;
+    height: 72px;
+    background: $brand-bg;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 24px;
+    color: $brand-accent-glow;
+    animation: pulseGlow 3s infinite ease-in-out;
+    box-shadow: 0 8px 24px rgba($brand-accent-glow, 0.2);
+  }
+  
+  .welcome-text {
+    font-size: 28px;
+    font-weight: 700;
+    margin: 0 0 8px 0;
+    color: $text-dark;
+  }
+  
+  .welcome-subtext {
+    font-size: 16px;
+    color: $text-body;
+    margin: 0;
+  }
+}
+
+.login-card {
+  .input-group {
+    margin-bottom: 24px;
+    
+    .label-box {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 8px;
+      color: $text-dark;
+      
+      .input-icon {
+        color: $text-muted;
+      }
+      
+      label {
+        font-size: 14px;
+        font-weight: 600;
+      }
+    }
+    
+    .login-input {
+      width: 100%;
+      padding: 14px 16px;
+      border: 1px solid $border-light;
+      border-radius: 12px;
+      font-size: 15px;
+      outline: none;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+      background: #fafafa;
+      color: $text-dark;
+      box-sizing: border-box; // Fix input overflowing 
+      
+      &:focus {
+        border-color: $brand-accent-glow;
+        background: #fff;
+        box-shadow: 0 0 0 3px rgba($brand-accent-glow, 0.15);
+      }
+      
+      &::placeholder {
+        color: $text-muted;
+      }
+      
+      &.input-error {
+        border-color: $error-text;
+        background: $error-bg;
+        
+        &:focus {
+          box-shadow: 0 0 0 3px rgba($error-text, 0.15);
+        }
+      }
+    }
+    
+    .helper-text {
+      display: block;
+      margin-top: 6px;
+      font-size: 13px;
+      
+      &.error {
+        color: $error-text;
+      }
+    }
+  }
+
+  .password-group {
+    .password-input-wrapper {
+      position: relative;
+      display: flex;
+      align-items: center;
+      
+      .login-input {
+        padding-right: 48px;
+      }
+      
+      .visibility-icon-btn {
+        position: absolute;
+        right: 12px;
+        background: none;
+        border: none;
+        color: $text-muted;
+        cursor: pointer;
+        padding: 4px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: color 0.2s;
+        
+        &:hover {
+          color: $text-dark;
+        }
+      }
+    }
+  }
+
+  .forgot-password-box {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 24px;
+    margin-top: -8px;
+    
+    .forgot-password-link {
+      font-size: 14px;
+      font-weight: 600;
+      color: $brand-accent-glow;
+      text-decoration: none;
+      transition: color 0.2s;
+      
+      &:hover {
+        color: darken($brand-accent-glow, 15%);
+        text-decoration: underline;
+      }
+    }
+  }
+
+  .login-submit-btn {
+    width: 100%;
+    padding: 16px;
+    border: none;
+    border-radius: 12px;
+    background: $text-dark;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    
+    &:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+      background: lighten($text-dark, 10%);
+    }
+    
+    &:active:not(:disabled) {
+      transform: translateY(0);
+    }
+    
+    &:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+    }
+    
+    &.loading {
+      background: $text-body;
+    }
+  }
+}
+
+.alert-box {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 16px;
+  border-radius: 12px;
+  margin-bottom: 24px;
+  font-size: 14px;
+  
+  &.error {
+    background: $error-bg;
+    border: 1px solid rgba($error-text, 0.2);
+    color: $error-text;
+    
+    .alert-icon {
+      color: $error-text;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    
+    strong {
+      display: block;
+      margin-bottom: 4px;
+      font-size: 15px;
+    }
+    
+    p {
+      margin: 0;
+      opacity: 0.9;
+    }
+  }
+}
+
+/* RIGHT SIDE: BRANDING */
+.branding-panel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 64px 48px;
+  background: linear-gradient(135deg, $text-dark 0%, #1e293b 100%);
+  color: #fff;
+  position: relative;
+  overflow: hidden;
+  animation: slideInRight 0.8s ease-out forwards;
+  
+  @media (max-width: 900px) {
+    display: none;
+  }
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle at center, rgba($brand-accent-glow, 0.15) 0%, transparent 60%);
+    z-index: 1;
+    pointer-events: none;
+  }
+}
+
+.branding-content-box {
+  position: relative;
+  z-index: 2;
+  max-width: 500px;
+  text-align: center;
+  
+  .brand-title {
+    font-size: 42px;
+    font-weight: 800;
+    margin: 0 0 12px 0;
+    background: linear-gradient(135deg, #ffffff 0%, #cbd5e1 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: -0.5px;
+  }
+  
+  .brand-subtitle {
+    font-size: 20px;
+    font-weight: 500;
+    color: #94a3b8;
+    margin: 0 0 24px 0;
+  }
+  
+  .pro-badge {
+    display: inline-block;
+    padding: 6px 16px;
+    background: rgba($brand-accent-glow, 0.2);
+    border: 1px solid rgba($brand-accent-glow, 0.4);
+    color: #eff6ff;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+  
+  .brand-divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    margin: 40px 0;
+  }
+  
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+    
+    .feature-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 16px;
+      padding: 24px;
+      text-align: left;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(10px);
+      
+      &:hover {
+        transform: translateY(-5px);
+        background: rgba(255, 255, 255, 0.06);
+        border-color: rgba(255, 255, 255, 0.1);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        
+        .feature-icon {
+          color: lighten($brand-accent-glow, 15%);
+          transform: scale(1.1);
+        }
+      }
+      
+      .feature-icon {
+        color: $brand-accent-glow;
+        margin-bottom: 16px;
+        transition: all 0.3s ease;
+      }
+      
+      .feature-title {
+        font-size: 16px;
+        font-weight: 600;
+        margin: 0 0 8px 0;
+        color: #fff;
+      }
+      
+      .feature-desc {
+        font-size: 13px;
+        color: #94a3b8;
+        margin: 0;
+        line-height: 1.5;
+      }
+    }
+  }
+}
