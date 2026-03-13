@@ -1,6 +1,7 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import useAuthAxios from "@/hooks/useAuthAxios";
 import "./page.scss";
 
 const Store = ({ size=24, className="" }) => (
@@ -38,35 +39,83 @@ const SUPPLYCO_STORES = [
 
 export default function SelectStore() {
     const [selectedCategory, setSelectedCategory] = useState(null);
+    const [rationStores, setRationStores] = useState([]);
+    const [supplycoStores, setSupplycoStores] = useState([]);
+    const [loading, setLoading] = useState(true);
     const router = useRouter();
+    const authAxios = useAuthAxios();
+
+    useEffect(() => {
+        const fetchStores = async () => {
+            try {
+                const response = await authAxios.get('/api/stores');
+                if (!response) return;
+                
+                if (response.data && response.data.success) {
+                    const stores = response.data.data;
+                    const ration = stores.filter(store => store.type === 'Ration Store').map(s => ({...s, status: s.status || 'Open'}));
+                    const supplyco = stores.filter(store => store.type === 'Supplyco').map(s => ({...s, status: s.status || 'Open'}));
+                    
+                    setRationStores(ration);
+                    setSupplycoStores(supplyco);
+                }
+            } catch (error) {
+                console.error("Failed to fetch stores", error);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchStores();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     const handleSelectStore = (storeId) => {
         router.push('/products');
     };
 
     const renderStoreList = (stores) => {
+        if (loading) {
+            return (
+                <div style={{ display: "flex", justifyContent: "center", padding: "2rem" }}>
+                    <p>Loading stores...</p>
+                </div>
+            );
+        }
+
+        if (stores.length === 0) {
+            return (
+                <div style={{ display: "flex", justifyContent: "center", padding: "2rem" }}>
+                    <p>No stores found for this category.</p>
+                </div>
+            );
+        }
+
         return (
             <div className="store-list">
-                {stores.map(store => (
-                    <div key={store.id} className={`store-card ${store.status.toLowerCase()}`}>
-                        <div className="store-info">
-                            <div className="store-header">
-                                <Store className="store-icon-small" size={20} />
-                                <h3>{store.name}</h3>
+                {stores.map(store => {
+                    const storeId = store._id || store.id;
+                    return (
+                        <div key={storeId} className={`store-card ${store.status.toLowerCase()}`}>
+                            <div className="store-info">
+                                <div className="store-header">
+                                    <Store className="store-icon-small" size={20} />
+                                    <h3>{store.name}</h3>
+                                </div>
+                                <div className="store-address">
+                                    <MapPin className="address-icon" size={16} />
+                                    <p>{store.address}</p>
+                                </div>
                             </div>
-                            <div className="store-address">
-                                <MapPin className="address-icon" size={16} />
-                                <p>{store.address}</p>
+                            <div className="store-action">
+                                <span className="status-badge">{store.status}</span>
+                                <button className="select-btn" disabled={store.status === 'Closed'} onClick={() => handleSelectStore(storeId)}>
+                                    Select <ArrowRight size={16} />
+                                </button>
                             </div>
                         </div>
-                        <div className="store-action">
-                            <span className="status-badge">{store.status}</span>
-                            <button className="select-btn" disabled={store.status === 'Closed'} onClick={() => handleSelectStore(store.id)}>
-                                Select <ArrowRight size={16} />
-                            </button>
-                        </div>
-                    </div>
-                ))}
+                    );
+                })}
             </div>
         );
     };
@@ -114,7 +163,7 @@ export default function SelectStore() {
                     </div>
                 ) : (
                     <div className="stores-container">
-                        {selectedCategory === 'ration' ? renderStoreList(RATION_STORES) : renderStoreList(SUPPLYCO_STORES)}
+                        {selectedCategory === 'ration' ? renderStoreList(rationStores) : renderStoreList(supplycoStores)}
                     </div>
                 )}
             </div>

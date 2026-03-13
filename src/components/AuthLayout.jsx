@@ -44,7 +44,7 @@ export default function AuthLayout({ children }) {
   }, []);
 
   // Full screen routes don't need the HeaderSidebar
-  const fullScreenRoutes = ['/login', '/signup', '/access-denied', '/ForgotPassword', '/ResetPassword'];
+  const fullScreenRoutes = ['/login', '/signup', '/select-store', '/access-denied', '/ForgotPassword', '/ResetPassword'];
   const isFullScreenRoute = fullScreenRoutes.includes(pathname);
 
   return (
