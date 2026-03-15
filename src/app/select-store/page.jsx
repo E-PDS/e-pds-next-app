@@ -4,37 +4,37 @@ import { useRouter } from "next/navigation";
 import useAuthAxios from "@/hooks/useAuthAxios";
 import "./page.scss";
 
-const Store = ({ size=24, className="" }) => (
-  <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="m2 7 4.41-4.41A2 2 0 0 1 7.83 2h8.34a2 2 0 0 1 1.42.59L22 7"/><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><path d="M15 22v-4a2 2 0 0 0-2-2h-2a2 2 0 0 0-2 2v4"/><path d="M2 7h20"/><path d="M22 7v3a2 2 0 0 1-2 2v0a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 16 12a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 12 12a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 8 12a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 4 12v0a2 2 0 0 1-2-2V7"/></svg>
+const Store = ({ size = 24, className = "" }) => (
+    <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="m2 7 4.41-4.41A2 2 0 0 1 7.83 2h8.34a2 2 0 0 1 1.42.59L22 7" /><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8" /><path d="M15 22v-4a2 2 0 0 0-2-2h-2a2 2 0 0 0-2 2v4" /><path d="M2 7h20" /><path d="M22 7v3a2 2 0 0 1-2 2v0a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 16 12a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 12 12a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 8 12a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 4 12v0a2 2 0 0 1-2-2V7" /></svg>
 );
 
-const ShoppingBasket = ({ size=24, className="" }) => (
-  <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="m15 11-1 9"/><path d="m19 11-4-7"/><path d="M2 11h20"/><path d="m3.5 11 1.6 7.4a2 2 0 0 0 2 1.6h9.8a2 2 0 0 0 2-1.6l1.7-7.4"/><path d="M4.5 15.5h15"/><path d="m5 11 4-7"/><path d="m9 11 1 9"/></svg>
+const ShoppingBasket = ({ size = 24, className = "" }) => (
+    <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="m15 11-1 9" /><path d="m19 11-4-7" /><path d="M2 11h20" /><path d="m3.5 11 1.6 7.4a2 2 0 0 0 2 1.6h9.8a2 2 0 0 0 2-1.6l1.7-7.4" /><path d="M4.5 15.5h15" /><path d="m5 11 4-7" /><path d="m9 11 1 9" /></svg>
 );
 
-const MapPin = ({ size=24, className="" }) => (
-  <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg>
+const MapPin = ({ size = 24, className = "" }) => (
+    <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0" /><circle cx="12" cy="10" r="3" /></svg>
 );
 
-const ChevronLeft = ({ size=24, className="" }) => (
-  <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="m15 18-6-6 6-6"/></svg>
+const ChevronLeft = ({ size = 24, className = "" }) => (
+    <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="m15 18-6-6 6-6" /></svg>
 );
 
-const ArrowRight = ({ size=24, className="" }) => (
-  <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+const ArrowRight = ({ size = 24, className = "" }) => (
+    <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
 );
 
 const RATION_STORES = [
-  { id: 1, name: "ARD 105, Downtown", address: "Opposite City Hall, Main Road", status: "Open" },
-  { id: 2, name: "ARD 112, East Avenue", address: "Near Railway Station", status: "Open" },
-  { id: 3, name: "ARD 204, West Side", address: "Complex Building", status: "Closed" },
-  { id: 4, name: "ARD 301, North Hills", address: "Valley View Center", status: "Open" },
+    { id: 1, name: "ARD 105, Downtown", address: "Opposite City Hall, Main Road", status: "Open" },
+    { id: 2, name: "ARD 112, East Avenue", address: "Near Railway Station", status: "Open" },
+    { id: 3, name: "ARD 204, West Side", address: "Complex Building", status: "Closed" },
+    { id: 4, name: "ARD 301, North Hills", address: "Valley View Center", status: "Open" },
 ];
 
 const SUPPLYCO_STORES = [
-  { id: 1, name: "Maveli Store, North Hills", address: "Near Police Station", status: "Open" },
-  { id: 2, name: "Supplyco Supermarket", address: "City Center Mall", status: "Open" },
-  { id: 3, name: "Supplyco Medical Store", address: "First Floor, Metro Station", status: "Closed" },
+    { id: 1, name: "Maveli Store, North Hills", address: "Near Police Station", status: "Open" },
+    { id: 2, name: "Supplyco Supermarket", address: "City Center Mall", status: "Open" },
+    { id: 3, name: "Supplyco Medical Store", address: "First Floor, Metro Station", status: "Closed" },
 ];
 
 export default function SelectStore() {
@@ -50,12 +50,12 @@ export default function SelectStore() {
             try {
                 const response = await authAxios.get('/api/stores');
                 if (!response) return;
-                
+
                 if (response.data && response.data.success) {
                     const stores = response.data.data;
-                    const ration = stores.filter(store => store.type === 'Ration Store').map(s => ({...s, status: s.status || 'Open'}));
-                    const supplyco = stores.filter(store => store.type === 'Supplyco').map(s => ({...s, status: s.status || 'Open'}));
-                    
+                    const ration = stores.filter(store => store.shopType === 'Ration Store').map(s => ({ ...s, status: s.status || 'Open' }));
+                    const supplyco = stores.filter(store => store.shopType === 'Supplyco').map(s => ({ ...s, status: s.status || 'Open' }));
+
                     setRationStores(ration);
                     setSupplycoStores(supplyco);
                 }
@@ -67,7 +67,7 @@ export default function SelectStore() {
         };
 
         fetchStores();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const handleSelectStore = (storeId) => {
@@ -100,11 +100,11 @@ export default function SelectStore() {
                             <div className="store-info">
                                 <div className="store-header">
                                     <Store className="store-icon-small" size={20} />
-                                    <h3>{store.name}</h3>
+                                    <h3>{store.shopName}</h3>
                                 </div>
                                 <div className="store-address">
                                     <MapPin className="address-icon" size={16} />
-                                    <p>{store.address}</p>
+                                    <p>{store.shopAddress}</p>
                                 </div>
                             </div>
                             <div className="store-action">
