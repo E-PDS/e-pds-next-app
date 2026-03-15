@@ -53,7 +53,7 @@ export default function SelectStore() {
 
                 if (response.data && response.data.success) {
                     const stores = response.data.data;
-                    const ration = stores.filter(store => store.shopType === 'Ration Store').map(s => ({ ...s, status: s.status || 'Open' }));
+                    const ration = stores.filter(store => store.shopType === 'Ration Shop').map(s => ({ ...s, status: s.status || 'Open' }));
                     const supplyco = stores.filter(store => store.shopType === 'Supplyco').map(s => ({ ...s, status: s.status || 'Open' }));
 
                     setRationStores(ration);
