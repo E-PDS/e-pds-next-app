@@ -1,0 +1,12 @@
+{
+    "_id": {
+        "$oid": "69b6e3be4d1b9dc48ca54842"
+    },
+    "productName": "coffee powder",
+    "description": "gdgjty",
+    "unit": "pcs",
+    "sellingPrice": 5,
+    "brandId": {
+        "$oid": "695913b9140f7abc2a1b81b6"
+    }
+}

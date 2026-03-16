@@ -1,0 +1,39 @@
+{
+    "_id": {
+        "$oid": "69b8..."
+    },
+    "userId": {
+        "$oid": "69b1..."
+    },
+    "storeId": {
+        "$oid": "69b6..."
+    },
+    "items": [
+        {
+            "productId": {
+                "$oid": "69b6e3be4d1b9dc48ca54842"
+            },
+            "quantity": 2,
+            "unit": "pcs",
+            "price": 5,
+            "total": 10
+        }
+    ],
+    "totalAmount": 10,
+    "status": "pending",
+    "deliveryAddress": {
+        "fullName": "John Doe",
+        "phone": "9876543210",
+        "addressLine1": "123 Main Street",
+        "addressLine2": "Apt 4B",
+        "city": "Sample City",
+        "state": "Sample State",
+        "pincode": "123456"
+    },
+    "createdAt": {
+        "$date": "2026-03-16T17:30:00Z"
+    },
+    "updatedAt": {
+        "$date": "2026-03-16T17:30:00Z"
+    }
+}

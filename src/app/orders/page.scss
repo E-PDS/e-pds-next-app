@@ -1,0 +1,28 @@
+.orders-page-container {
+    padding: 2rem;
+    max-width: 800px;
+    margin: 0 auto;
+
+    .orders-list {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+        margin-top: 1.5rem;
+
+        .order-card {
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            
+            &:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+            }
+
+            .status-chip {
+                font-weight: 600;
+                letter-spacing: 0.5px;
+            }
+        }
+    }
+}

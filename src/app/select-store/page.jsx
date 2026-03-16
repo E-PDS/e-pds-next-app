@@ -1,6 +1,8 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { useDispatch } from "react-redux";
+import { setSelectedStore } from "@/redux/shopSlice";
 import useAuthAxios from "@/hooks/useAuthAxios";
 import "./page.scss";
 
@@ -43,6 +45,7 @@ export default function SelectStore() {
     const [supplycoStores, setSupplycoStores] = useState([]);
     const [loading, setLoading] = useState(true);
     const router = useRouter();
+    const dispatch = useDispatch();
     const authAxios = useAuthAxios();
 
     useEffect(() => {
@@ -70,7 +73,8 @@ export default function SelectStore() {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    const handleSelectStore = (storeId) => {
+    const handleSelectStore = (store) => {
+        dispatch(setSelectedStore(store));
         router.push('/products');
     };
 
@@ -109,7 +113,7 @@ export default function SelectStore() {
                             </div>
                             <div className="store-action">
                                 <span className="status-badge">{store.status}</span>
-                                <button className="select-btn" disabled={store.status === 'Closed'} onClick={() => handleSelectStore(storeId)}>
+                                <button className="select-btn" disabled={store.status === 'Closed'} onClick={() => handleSelectStore(store)}>
                                     Select <ArrowRight size={16} />
                                 </button>
                             </div>

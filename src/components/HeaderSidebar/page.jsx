@@ -1,8 +1,8 @@
 'use client';
 
 import React, { useState } from 'react';
-import { 
-  AppBar, Toolbar, IconButton, InputBase, Badge, Drawer, 
+import {
+  AppBar, Toolbar, IconButton, InputBase, Badge, Drawer,
   List, ListItem, ListItemButton, ListItemIcon, ListItemText,
   BottomNavigation, BottomNavigationAction, Paper, Box, Typography
 } from '@mui/material';
@@ -14,6 +14,7 @@ import HomeIcon from '@mui/icons-material/Home';
 import ListAltIcon from '@mui/icons-material/ListAlt';
 import PersonIcon from '@mui/icons-material/Person';
 import { useRouter, usePathname } from 'next/navigation';
+import { useSelector } from 'react-redux';
 
 const SearchContainer = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -61,6 +62,12 @@ export default function HeaderSidebar({ children }) {
   const router = useRouter();
   const pathname = usePathname();
 
+  const cartItems = useSelector((state) => {
+    const activeTab = state.cart.tabs.find((t) => t.id === state.cart.activeTabId);
+    return activeTab ? activeTab.items : [];
+  });
+  const totalItems = cartItems.reduce((sum, item) => sum + item.quantity, 0);
+
   const toggleDrawer = (open) => (event) => {
     if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
       return;
@@ -69,7 +76,7 @@ export default function HeaderSidebar({ children }) {
   };
 
   const navItems = [
-    { label: 'Home', icon: <HomeIcon />, path: '/' },
+    { label: 'Home', icon: <HomeIcon />, path: '/products' },
     { label: 'Orders', icon: <ListAltIcon />, path: '/orders' },
     { label: 'Account', icon: <PersonIcon />, path: '/account' },
   ];
@@ -89,7 +96,7 @@ export default function HeaderSidebar({ children }) {
           >
             <MenuIcon />
           </IconButton>
-          
+
           <Typography variant="h6" noWrap component="div" sx={{ display: { xs: 'none', sm: 'block' } }}>
             E-PDS
           </Typography>
@@ -106,8 +113,8 @@ export default function HeaderSidebar({ children }) {
 
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: 'flex' }}>
-            <IconButton size="large" aria-label="cart" color="inherit">
-              <Badge badgeContent={0} color="error">
+            <IconButton size="large" aria-label="cart" color="inherit" onClick={() => router.push('/cart')}>
+              <Badge badgeContent={totalItems} color="error">
                 <ShoppingCartIcon />
               </Badge>
             </IconButton>
@@ -130,7 +137,7 @@ export default function HeaderSidebar({ children }) {
           <List>
             {navItems.map((item) => (
               <ListItem key={item.label} disablePadding>
-                <ListItemButton 
+                <ListItemButton
                   selected={pathname === item.path}
                   onClick={() => router.push(item.path)}
                 >

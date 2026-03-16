@@ -1,0 +1,12 @@
+{
+    "_id": {
+        "$oid": "69b6c15adb7f7f4bd6a13660"
+    },
+    "storeId": {
+        "$oid": "69b6c178db7f7f4bd6a13661"
+    },
+    "productId": {
+        "$oid": "69b6c188db7f7f4bd6a13662"
+    },
+    "quantity": 60
+}

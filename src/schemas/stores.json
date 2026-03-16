@@ -1,0 +1,17 @@
+{
+    "_id": {
+        "$oid": "69b6bcdc8688df9eb4fea391"
+    },
+    "shopId": "1",
+    "shopName": "Supplyco Thuravoor",
+    "shopAddress": "Thuravoo - kumbalangi Rd,\nThuravoor Thekku, Kerala\n688532",
+    "shopType": "Supplyco",
+    "location": {
+        "type": "Point",
+        "coordinates": [
+            76.317223,
+            9.768701
+        ]
+    },
+    "status": "pending"
+}

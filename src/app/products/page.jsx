@@ -1,7 +1,10 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./page.scss";
 import { useRouter } from "next/navigation";
+import { useSelector, useDispatch } from "react-redux";
+import { addItem, removeItem, updateItemQuantity } from "@/redux/cartSlice";
+import useAuthAxios from "@/hooks/useAuthAxios";
 
 // Icons 
 const ChevronLeft = ({ size = 24, className = "" }) => (
@@ -20,15 +23,6 @@ const Minus = ({ size = 24, className = "" }) => (
   <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M5 12h14"/></svg>
 );
 
-// Dummy products with associated icons
-const DUMMY_PRODUCTS = [
-  { id: 1, name: "Premium White Rice", description: "High quality sorted white rice", price: 15, unit: "kg", inStock: true, icon: "wheat" },
-  { id: 2, name: "Whole Wheat", description: "Locally sourced whole wheat grains", price: 20, unit: "kg", inStock: true, icon: "wheat" },
-  { id: 3, name: "Refined Sugar", description: "Pure white crystallized sugar", price: 40, unit: "kg", inStock: true, icon: "package" },
-  { id: 4, name: "Kerosene", description: "Cooking and lighting grade", price: 25, unit: "L", inStock: true, icon: "flame" },
-  { id: 5, name: "Lentils (Toor Dal)", description: "Protein-rich pulses", price: 65, unit: "kg", inStock: true, icon: "package" },
-  { id: 6, name: "Cooking Oil", description: "Refined sunflower oil", price: 110, unit: "L", inStock: true, icon: "droplet" },
-];
 
 const getIconForProduct = (iconType, size = 48) => {
     switch (iconType) {
@@ -47,32 +41,80 @@ const getIconForProduct = (iconType, size = 48) => {
 
 export default function Products() {
     const router = useRouter();
-    const [cart, setCart] = useState({});
+    const dispatch = useDispatch();
+    const authAxios = useAuthAxios();
+    const selectedStore = useSelector(state => state.shop.selectedStore);
+    
+    const [products, setProducts] = useState([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        if (!selectedStore) {
+            router.push('/select-store');
+            return;
+        }
+
+        const fetchProducts = async () => {
+            try {
+                const res = await authAxios.get(`/api/products/${selectedStore._id || selectedStore.id}`);
+                if (res?.data?.success) {
+                    setProducts(res.data.data);
+                }
+            } catch (err) {
+                console.error("Failed to fetch products:", err);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchProducts();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [selectedStore]);
+
+    // Read cart items from Redux
+    const cartItems = useSelector((state) => {
+        const activeTab = state.cart.tabs.find((t) => t.id === state.cart.activeTabId);
+        return activeTab ? activeTab.items : [];
+    });
 
     const handleBack = () => {
         router.push('/select-store');
     };
 
-    const updateQuantity = (productId, delta) => {
-        setCart((prev) => {
-            const currentQty = prev[productId] || 0;
-            const newQty = Math.max(0, currentQty + delta);
-            
-            const newCart = { ...prev };
-            if (newQty === 0) {
-                delete newCart[productId];
-            } else {
-                newCart[productId] = newQty;
-            }
-            return newCart;
-        });
+    const updateQuantity = (product, delta) => {
+        const itemInCart = cartItems.find((item) => item.id === product.id);
+        const currentQty = itemInCart ? itemInCart.quantity : 0;
+        const newQty = Math.max(0, currentQty + delta);
+        
+        // Stock limit logic (cannot add more than stock)
+        if (delta > 0 && newQty > product.stock) {
+            alert(`Cannot add more than available stock (${product.stock}).`);
+            return;
+        }
+
+        if (newQty === 0 && itemInCart) {
+            dispatch(removeItem(product.id));
+        } else if (!itemInCart && newQty > 0) {
+            dispatch(addItem({
+                id: product.id,
+                name: product.name,
+                price: product.price,
+                quantity: newQty,
+                total: product.price * newQty,
+                selectedUnit: product.unit,
+                icon: product.icon
+            }));
+        } else if (itemInCart) {
+            dispatch(updateItemQuantity({
+                id: product.id,
+                quantity: newQty,
+                total: product.price * newQty
+            }));
+        }
     };
 
-    const totalItems = Object.values(cart).reduce((sum, qty) => sum + qty, 0);
-    const totalPrice = Object.entries(cart).reduce((sum, [id, qty]) => {
-        const product = DUMMY_PRODUCTS.find(p => p.id === parseInt(id));
-        return sum + (product ? product.price * qty : 0);
-    }, 0);
+    const totalItems = cartItems.reduce((sum, item) => sum + item.quantity, 0);
+    const totalPrice = cartItems.reduce((sum, item) => sum + item.total, 0);
 
     return (
         <div className="products-page-container">
@@ -81,29 +123,23 @@ export default function Products() {
                     <ChevronLeft size={20} /> Back
                 </button>
                 <div className="header-info">
-                    <h1>Available Products</h1>
+                    <h1>Available Products at {selectedStore?.shopName || 'Store'}</h1>
                     <p className="subtitle">Select the items you need and choose your desired quantity</p>
                 </div>
-                {totalItems > 0 && (
-                    <div className="cart-summary">
-                        <div className="cart-icon-wrapper">
-                            <ViewCart size={24} className="cart-icon" />
-                            <span className="cart-badge">{totalItems}</span>
-                        </div>
-                        <div className="cart-total">
-                            <span className="cart-label">Total</span>
-                            <span className="cart-amount">₹{totalPrice}</span>
-                        </div>
-                    </div>
-                )}
             </div>
 
             <div className="products-grid">
-                {DUMMY_PRODUCTS.map((product) => {
-                    const quantity = cart[product.id] || 0;
+                {loading ? (
+                    <div className="loading-state">Loading products...</div>
+                ) : products.length === 0 ? (
+                    <div className="empty-state">No products found for this store.</div>
+                ) : products.map((product) => {
+                    const itemInCart = cartItems.find(item => item.id === product.id);
+                    const quantity = itemInCart ? itemInCart.quantity : 0;
+                    const isOutOfStock = product.stock === 0 || !product.inStock;
                     
                     return (
-                        <div key={product.id} className="product-card">
+                        <div key={product.id} className={`product-card ${isOutOfStock ? 'out-of-stock' : ''}`}>
                             <div className="product-icon-container">
                                 {getIconForProduct(product.icon, 48)}
                             </div>
@@ -114,13 +150,18 @@ export default function Products() {
                                     <span className="price">₹{product.price}</span>
                                     <span className="unit">/ {product.unit}</span>
                                 </div>
+                                {isOutOfStock && <span className="out-of-stock-label" style={{ color: 'red', fontSize: '12px', fontWeight: 'bold' }}>Out of Stock</span>}
                             </div>
                             
                             <div className="product-actions">
-                                {quantity === 0 ? (
+                                {isOutOfStock ? (
+                                    <button className="add-to-cart-btn disabled" disabled style={{ backgroundColor: '#ccc', cursor: 'not-allowed' }}>
+                                        Out of Stock
+                                    </button>
+                                ) : quantity === 0 ? (
                                     <button 
                                         className="add-to-cart-btn" 
-                                        onClick={() => updateQuantity(product.id, 1)}
+                                        onClick={() => updateQuantity(product, 1)}
                                     >
                                         Add to Cart
                                     </button>
@@ -128,7 +169,7 @@ export default function Products() {
                                     <div className="quantity-controls">
                                         <button 
                                             className="qty-btn" 
-                                            onClick={() => updateQuantity(product.id, -1)}
+                                            onClick={() => updateQuantity(product, -1)}
                                             aria-label="Decrease quantity"
                                         >
                                             <Minus size={16} />
@@ -139,8 +180,10 @@ export default function Products() {
                                         </div>
                                         <button 
                                             className="qty-btn" 
-                                            onClick={() => updateQuantity(product.id, 1)}
+                                            onClick={() => updateQuantity(product, 1)}
                                             aria-label="Increase quantity"
+                                            disabled={quantity >= product.stock}
+                                            style={{ opacity: quantity >= product.stock ? 0.5 : 1 }}
                                         >
                                             <Plus size={16} />
                                         </button>
@@ -151,19 +194,6 @@ export default function Products() {
                     );
                 })}
             </div>
-            
-            {totalItems > 0 && (
-                <div className="floating-checkout-bar">
-                    <div className="checkout-info">
-                        <span className="items-count">{totalItems} Item{totalItems !== 1 && 's'}</span>
-                        <span className="total-divider">•</span>
-                        <span className="total-amount">₹{totalPrice}</span>
-                    </div>
-                    <button className="checkout-btn">
-                        Proceed to Checkout
-                    </button>
-                </div>
-            )}
         </div>
     );
 }
