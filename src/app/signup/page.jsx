@@ -8,44 +8,44 @@ import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import Link from 'next/link';
 
-const User = ({ size=24, className="" }) => (
-  <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+const User = ({ size = 24, className = "" }) => (
+  <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" /><circle cx="12" cy="7" r="4" /></svg>
 );
 
-const Mail = ({ size=24, className="" }) => (
-  <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+const Mail = ({ size = 24, className = "" }) => (
+  <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><rect width="20" height="16" x="2" y="4" rx="2" /><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" /></svg>
 );
 
-const Lock = ({ size=24, className="" }) => (
-  <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+const Lock = ({ size = 24, className = "" }) => (
+  <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><rect width="18" height="11" x="3" y="11" rx="2" ry="2" /><path d="M7 11V7a5 5 0 0 1 10 0v4" /></svg>
 );
 
-const Eye = ({ size=24, className="" }) => (
-  <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"/><circle cx="12" cy="12" r="3"/></svg>
+const Eye = ({ size = 24, className = "" }) => (
+  <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0" /><circle cx="12" cy="12" r="3" /></svg>
 );
 
-const EyeOff = ({ size=24, className="" }) => (
-  <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M10.733 5.076a10.744 10.744 0 0 1 11.205 6.579 1 1 0 0 1 0 .696 10.747 10.747 0 0 1-1.444 2.49"/><path d="M14.084 14.158a3 3 0 0 1-4.242-4.242"/><path d="M17.479 17.499a10.75 10.75 0 0 1-15.417-5.151 1 1 0 0 1 0-.696 10.75 10.75 0 0 1 4.446-5.143"/><path d="m2 2 20 20"/></svg>
+const EyeOff = ({ size = 24, className = "" }) => (
+  <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M10.733 5.076a10.744 10.744 0 0 1 11.205 6.579 1 1 0 0 1 0 .696 10.747 10.747 0 0 1-1.444 2.49" /><path d="M14.084 14.158a3 3 0 0 1-4.242-4.242" /><path d="M17.479 17.499a10.75 10.75 0 0 1-15.417-5.151 1 1 0 0 1 0-.696 10.75 10.75 0 0 1 4.446-5.143" /><path d="m2 2 20 20" /></svg>
 );
 
-const Store = ({ size=24, className="" }) => (
-  <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="m2 7 4.41-4.41A2 2 0 0 1 7.83 2h8.34a2 2 0 0 1 1.42.59L22 7"/><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><path d="M15 22v-4a2 2 0 0 0-2-2h-2a2 2 0 0 0-2 2v4"/><path d="M2 7h20"/><path d="M22 7v3a2 2 0 0 1-2 2v0a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 16 12a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 12 12a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 8 12a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 4 12v0a2 2 0 0 1-2-2V7"/></svg>
+const Store = ({ size = 24, className = "" }) => (
+  <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="m2 7 4.41-4.41A2 2 0 0 1 7.83 2h8.34a2 2 0 0 1 1.42.59L22 7" /><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8" /><path d="M15 22v-4a2 2 0 0 0-2-2h-2a2 2 0 0 0-2 2v4" /><path d="M2 7h20" /><path d="M22 7v3a2 2 0 0 1-2 2v0a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 16 12a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 12 12a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 8 12a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 4 12v0a2 2 0 0 1-2-2V7" /></svg>
 );
 
-const Activity = ({ size=24, className="" }) => (
-  <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M22 12h-2.48a2 2 0 0 0-1.93 1.46l-2.35 8.36a.25.25 0 0 1-.48 0L9.24 2.18a.25.25 0 0 0-.48 0l-2.35 8.36A2 2 0 0 1 4.48 12H2"/></svg>
+const Activity = ({ size = 24, className = "" }) => (
+  <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M22 12h-2.48a2 2 0 0 0-1.93 1.46l-2.35 8.36a.25.25 0 0 1-.48 0L9.24 2.18a.25.25 0 0 0-.48 0l-2.35 8.36A2 2 0 0 1 4.48 12H2" /></svg>
 );
 
-const Shield = ({ size=24, className="" }) => (
-  <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/></svg>
+const Shield = ({ size = 24, className = "" }) => (
+  <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z" /></svg>
 );
 
-const Package = ({ size=24, className="" }) => (
-  <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="m7.5 4.27 9 5.15"/><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg>
+const Package = ({ size = 24, className = "" }) => (
+  <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="m7.5 4.27 9 5.15" /><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z" /><path d="m3.3 7 8.7 5 8.7-5" /><path d="M12 22V12" /></svg>
 );
 
-const AlertCircle = ({ size=24, className="" }) => (
-  <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></svg>
+const AlertCircle = ({ size = 24, className = "" }) => (
+  <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><circle cx="12" cy="12" r="10" /><line x1="12" x2="12" y1="8" y2="12" /><line x1="12" x2="12.01" y1="16" y2="16" /></svg>
 );
 
 export default function Signup() {
@@ -54,7 +54,7 @@ export default function Signup() {
   const [showPassword, setShowPassword] = useState(false);
   const dispatch = useDispatch();
   const router = useRouter();
-  
+
   const {
     register,
     handleSubmit,
@@ -63,6 +63,7 @@ export default function Signup() {
   } = useForm();
 
   const password = watch("password");
+  const localBodyType = watch("localBodyType");
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -79,7 +80,14 @@ export default function Signup() {
         data: {
           fullName: data.fullName,
           email: data.email,
-          password: data.password
+          password: data.password,
+          talukName: data.talukName,
+          address: data.address,
+          localBodyType: data.localBodyType,
+          localBodyName: data.localBodyName,
+          wardNo: data.wardNo,
+          eligibleMembers: data.eligibleMembers,
+          annualIncome: data.annualIncome
         }
       });
 
@@ -87,20 +95,20 @@ export default function Signup() {
         // Automatically login the user if session is returned
         const sessionData = response.data.userSession || response.data.data;
         if (sessionData) {
-            dispatch(setUserSession(sessionData));
-            router.push('/select-store', { scroll: false });
+          dispatch(setUserSession(sessionData));
+          router.push('/select-store', { scroll: false });
         } else {
-            // Otherwise redirect to login
-            router.push('/login', { scroll: false });
+          // Otherwise redirect to login
+          router.push('/login', { scroll: false });
         }
       } else {
         setAlertInfo({ open: true, type: 'error', message: response.data.message || "Registration failed. Email might already exist." });
       }
     } catch (error) {
-      setAlertInfo({ 
-        open: true, 
-        type: 'error', 
-        message: error.response?.data?.message || "Something went wrong during registration." 
+      setAlertInfo({
+        open: true,
+        type: 'error',
+        message: error.response?.data?.message || "Something went wrong during registration."
       });
       console.error("Signup Error:", error);
     } finally {
@@ -116,7 +124,7 @@ export default function Signup() {
           <div className="branding-content-box">
             <h2 className="brand-title">E-PDS Enterprise</h2>
             <h3 className="brand-subtitle">Public Distribution System Suite</h3>
-            
+
             <span className="pro-badge">Kerala Govt. Integrated Edition</span>
 
             <div className="brand-divider" />
@@ -169,7 +177,7 @@ export default function Signup() {
                     </div>
                   </div>
                 )}
-                
+
                 <div className="input-group" style={{ marginBottom: "16px" }}>
                   <div className="label-box">
                     <User className="input-icon" size={16} />
@@ -199,7 +207,114 @@ export default function Signup() {
                   />
                   {errors.email && <span className="helper-text error">Email is required</span>}
                 </div>
+                <div className="input-group" style={{ marginBottom: "16px" }}>
+                  <div className="label-box">
+                    <label htmlFor="address">Full Address *</label>
+                  </div>
+                  <textarea
+                    id="address"
+                    placeholder="Enter your residential address"
+                    className={`login-input ${errors.address ? 'input-error' : ''}`}
+                    style={{ minHeight: '80px', fontFamily: 'inherit', resize: 'vertical' }}
+                    {...register("address", { required: true })}
+                  />
+                  {errors.address && <span className="helper-text error">Address is required</span>}
+                </div>
 
+                <div className="form-row" style={{ display: 'flex', gap: '16px', marginBottom: '16px' }}>
+                  <div className="input-group" style={{ flex: 1 }}>
+                    <div className="label-box">
+                      <label htmlFor="talukName">Taluk Name *</label>
+                    </div>
+                    <input
+                      id="talukName"
+                      type="text"
+                      placeholder="Enter Taluk"
+                      className={`login-input ${errors.talukName ? 'input-error' : ''}`}
+                      {...register("talukName", { required: true })}
+                    />
+                    {errors.talukName && <span className="helper-text error">Required</span>}
+                  </div>
+
+                  <div className="input-group" style={{ flex: 1 }}>
+                    <div className="label-box">
+                      <label htmlFor="localBodyType">Local Body Type *</label>
+                    </div>
+                    <select
+                      id="localBodyType"
+                      className={`login-input ${errors.localBodyType ? 'input-error' : ''}`}
+                      style={{ appearance: 'auto', backgroundColor: '#fff' }}
+                      {...register("localBodyType", { required: true })}
+                    >
+                      <option value="">Select type</option>
+                      <option value="panchayat">Panchayat</option>
+                      <option value="municipality">Municipality</option>
+                      <option value="corporation">Corporation</option>
+                    </select>
+                    {errors.localBodyType && <span className="helper-text error">Required</span>}
+                  </div>
+                </div>
+
+                {localBodyType && (
+                  <div className="input-group" style={{ marginBottom: "16px" }}>
+                    <div className="label-box">
+                      <label htmlFor="localBodyName">{localBodyType.charAt(0).toUpperCase() + localBodyType.slice(1)} Name *</label>
+                    </div>
+                    <input
+                      id="localBodyName"
+                      type="text"
+                      placeholder={`Enter ${localBodyType} name`}
+                      className={`login-input ${errors.localBodyName ? 'input-error' : ''}`}
+                      {...register("localBodyName", { required: true })}
+                    />
+                    {errors.localBodyName && <span className="helper-text error">Required</span>}
+                  </div>
+                )}
+
+                <div className="form-row" style={{ display: 'flex', gap: '16px', marginBottom: '16px' }}>
+                  <div className="input-group" style={{ flex: 1 }}>
+                    <div className="label-box">
+                      <label htmlFor="wardNo">Ward number *</label>
+                    </div>
+                    <input
+                      id="wardNo"
+                      type="text"
+                      placeholder="Enter ward no"
+                      className={`login-input ${errors.wardNo ? 'input-error' : ''}`}
+                      {...register("wardNo", { required: true })}
+                    />
+                    {errors.wardNo && <span className="helper-text error">Required</span>}
+                  </div>
+
+                  <div className="input-group" style={{ flex: 1 }}>
+                    <div className="label-box">
+                      <label htmlFor="annualIncome">Annual Income (₹) *</label>
+                    </div>
+                    <input
+                      id="annualIncome"
+                      type="number"
+                      placeholder="e.g. 150000"
+                      className={`login-input ${errors.annualIncome ? 'input-error' : ''}`}
+                      {...register("annualIncome", { required: true, min: 0 })}
+                    />
+                    {errors.annualIncome && <span className="helper-text error">Required</span>}
+                  </div>
+                </div>
+
+                <div className="input-group" style={{ marginBottom: "16px" }}>
+                  <div className="label-box">
+                    <label htmlFor="eligibleMembers">Number of members eligible for ration</label>
+                  </div>
+                  <input
+                    id="eligibleMembers"
+                    type="number"
+                    placeholder="e.g. 4"
+                    className={`login-input ${errors.eligibleMembers ? 'input-error' : ''}`}
+                    {...register("eligibleMembers", { required: true, min: 1 })}
+                  />
+                  {errors.eligibleMembers && <span className="helper-text error">Required</span>}
+                  <span className="helper-text" style={{ color: '#666', fontSize: '12px', display: 'block', marginTop: '4px' }}>Enter the total number of family members eligible for ration items.</span>
+                </div>
                 <div className="input-group password-group" style={{ marginBottom: "16px" }}>
                   <div className="label-box">
                     <Lock className="input-icon" size={16} />
@@ -237,7 +352,7 @@ export default function Signup() {
                       type={showPassword ? "text" : "password"}
                       placeholder="Confirm your password"
                       className={`login-input ${errors.confirmPassword ? 'input-error' : ''}`}
-                      {...register("confirmPassword", { 
+                      {...register("confirmPassword", {
                         required: true,
                         validate: value => value === password || "Passwords do not match"
                       })}

@@ -157,10 +157,10 @@ export default function CheckoutPage() {
                 </form>
             </div>
 
-            <Dialog 
-                open={showSuccessDialog} 
-                onClose={() => {}} 
-                maxWidth="xs" 
+            <Dialog
+                open={showSuccessDialog}
+                onClose={() => { }}
+                maxWidth="xs"
                 fullWidth
                 PaperProps={{
                     style: { borderRadius: 16, padding: '16px', textAlign: 'center' }
@@ -178,9 +178,9 @@ export default function CheckoutPage() {
                     </Box>
                 </DialogContent>
                 <DialogActions style={{ justifyContent: 'center', paddingBottom: '16px' }}>
-                    <Button 
-                        variant="contained" 
-                        color="primary" 
+                    <Button
+                        variant="contained"
+                        color="primary"
                         size="large"
                         fullWidth
                         style={{ borderRadius: 8, textTransform: 'none' }}

@@ -1,0 +1,24 @@
+{
+    "_id": {
+        "$oid": "69bff2054c8ed8326c0cc9e3"
+    },
+    "userId": {
+        "$oid": "69bff2054c8ed8326c0cc9e1"
+    },
+    "fullName": "aparna",
+    "cardNumber": "1334458435",
+    "color": "Blue",
+    "type": "APL",
+    "priority": "Normal Priority",
+    "annualIncome": 25000,
+    "eligibleMembers": 4,
+    "address": "valavanattu nikarth,\nthuravoor po,\ncherthla. ",
+    "talukName": "cherthala",
+    "wardNo": "5",
+    "localBodyType": "panchayat",
+    "localBodyName": "thuravoor",
+    "status": "Active",
+    "issuedDate": {
+        "$date": "2026-03-22T13:43:33.544Z"
+    }
+}

@@ -1,0 +1,127 @@
+.account-container {
+    min-height: 100vh;
+    padding: 2rem 1rem;
+    background-color: #f8fafc;
+    font-family: 'Inter', system-ui, sans-serif;
+
+    .header {
+        text-align: center;
+        margin-bottom: 2rem;
+
+        h1 {
+            font-size: 2rem;
+            color: #1e293b;
+            margin-bottom: 0.5rem;
+        }
+
+        p {
+            color: #64748b;
+        }
+    }
+
+    .ecard-wrapper {
+        max-width: 480px;
+        margin: 0 auto 2rem;
+        padding: 1.5rem;
+        border-radius: 16px;
+        box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+        position: relative;
+        overflow: hidden;
+
+        &.color-White {
+            background: #ffffff;
+            border: 2px solid #e2e8f0;
+            color: #1e293b;
+        }
+
+        &.color-Blue {
+            background: #eff6ff;
+            border: 2px solid #3b82f6;
+            color: #1e3a8a;
+        }
+
+        &.color-Pink {
+            background: #fdf2f8;
+            border: 2px solid #ec4899;
+            color: #831843;
+        }
+
+        &.color-Yellow {
+            background: #fefce8;
+            border: 2px solid #eab308;
+            color: #713f12;
+        }
+
+        .ecard-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            .badge {
+                padding: 4px 12px;
+                border-radius: 999px;
+                font-size: 0.75rem;
+                text-transform: uppercase;
+                background: rgba(0, 0, 0, 0.05);
+            }
+        }
+
+        .ecard-number {
+            font-size: 1.7rem;
+            letter-spacing: 2px;
+            font-family: monospace;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            background: rgba(255, 255, 255, 0.4);
+            padding: 0.5rem;
+            border-radius: 8px;
+        }
+
+        .ecard-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.2rem;
+
+            .detail-group {
+                display: flex;
+                flex-direction: column;
+
+                span {
+                    font-size: 0.75rem;
+                    opacity: 0.75;
+                    text-transform: uppercase;
+                    font-weight: 600;
+                    margin-bottom: 0.2rem;
+                }
+
+                strong {
+                    font-size: 0.95rem;
+                }
+            }
+        }
+    }
+
+    .actions {
+        display: flex;
+        justify-content: center;
+
+        .logout-btn {
+            background: #ef4444;
+            color: white;
+            padding: 0.75rem 2rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+
+            &:hover {
+                background: #dc2626;
+            }
+        }
+    }
+}
