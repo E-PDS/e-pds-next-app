@@ -3,13 +3,22 @@
     padding: 2rem;
     background: #f8fafc;
     position: relative;
-    overflow: hidden;
+    overflow-x: hidden;
+
+    @media (max-width: 480px) {
+        padding: 1rem;
+    }
 
     .header {
         margin-bottom: 2rem;
         display: flex;
         align-items: center;
         gap: 1.5rem;
+
+        @media (max-width: 480px) {
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
 
         .back-btn {
             background: white;
@@ -35,10 +44,17 @@
                 font-weight: 700;
                 color: #0f172a;
                 margin: 0;
+
+                @media (max-width: 480px) {
+                    font-size: 1.5rem;
+                }
             }
             p {
                 color: #64748b;
                 margin: 0.25rem 0 0 0;
+                @media (max-width: 480px) {
+                    font-size: 0.875rem;
+                }
             }
         }
     }
@@ -61,6 +77,11 @@
         padding: 2rem;
         box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.04), 0 4px 6px -2px rgba(0, 0, 0, 0.02);
         border: 1px solid rgba(226, 232, 240, 0.8);
+
+        @media (max-width: 480px) {
+            padding: 1.5rem;
+            border-radius: 16px;
+        }
 
         h2 {
             font-size: 1.25rem;
@@ -181,6 +202,12 @@
                 box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
             }
 
+            @media (max-width: 480px) {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+
             .main-info {
                 .date {
                     font-weight: 600;
@@ -215,6 +242,14 @@
                     font-size: 1.5rem;
                     font-weight: 800;
                     color: #0f172a;
+                }
+
+                @media (max-width: 480px) {
+                    text-align: left;
+                    width: 100%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
                 }
                 .status-badge {
                     margin-top: 0.25rem;

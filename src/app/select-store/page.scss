@@ -42,11 +42,18 @@
             background: linear-gradient(135deg, #0f172a 0%, #334155 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+
+            @media (max-width: 480px) {
+                font-size: 1.75rem;
+            }
         }
 
         .subtitle {
             font-size: 1.125rem;
             color: #64748b;
+            @media (max-width: 480px) {
+                font-size: 0.95rem;
+            }
         }
     }
 
@@ -129,6 +136,11 @@
                 z-index: 2;
                 flex-grow: 1;
                 transition: all 0.3s ease;
+
+                @media (max-width: 480px) {
+                    font-size: 0.9rem;
+                    margin-bottom: 1.5rem;
+                }
             }
 
             .card-footer {
@@ -210,6 +222,10 @@
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
             gap: 1.5rem;
+
+            @media (max-width: 480px) {
+                grid-template-columns: 1fr;
+            }
         }
 
         .store-card {

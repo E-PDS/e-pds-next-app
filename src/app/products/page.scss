@@ -52,11 +52,19 @@
                 background: linear-gradient(135deg, #0f172a 0%, #334155 100%);
                 -webkit-background-clip: text;
                 -webkit-text-fill-color: transparent;
+
+                @media (max-width: 480px) {
+                    font-size: 1.5rem;
+                }
             }
 
             .subtitle {
                 font-size: 1rem;
                 color: #64748b;
+
+                @media (max-width: 480px) {
+                    font-size: 0.85rem;
+                }
             }
         }
 
@@ -125,6 +133,11 @@
         grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
         gap: 2rem;
         animation: fadeIn 0.4s ease-out forwards;
+
+        @media (max-width: 480px) {
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+        }
     }
 
     .product-card {
