@@ -8,27 +8,38 @@ export default async function handler(req, res) {
     }
 
     try {
+        const db = await connectToDatabase();
+
         let userId = null;
 
         // 🔹 Get userId safely
-        const sessionTokenRaw = req.headers['sessiontoken'] || req.headers['x-session-token'];
+        const sessionTokenRaw = req.headers['sessiontoken'] || req.headers['sessionToken'] || req.headers['x-session-token'];
+        console.log("Orders API: sessionTokenRaw =", sessionTokenRaw);
 
         if (sessionTokenRaw) {
             try {
-                // If it's a JSON string
+                // If it's a JSON string (likely from Proxy)
                 const sessionData = JSON.parse(sessionTokenRaw);
+                console.log("Orders API: sessionData =", sessionData);
                 userId = sessionData.userId || sessionData;
-            } catch {
-                // If it's a plain string
-                userId = sessionTokenRaw;
+            } catch (err) {
+                // If it's a plain string (session token directly from frontend)
+                console.log("Orders API: Treating as plain session token, looking up in DB...");
+                const sessionDoc = await db.collection("user_sessions").findOne({ sessionToken: sessionTokenRaw });
+                if (sessionDoc) {
+                    userId = sessionDoc.userId;
+                    console.log("Orders API: Found userId from sessionDoc =", userId);
+                } else {
+                    console.log("Orders API: No session found for token");
+                }
             }
         }
+
+        console.log("Orders API: Resolved userId =", userId);
 
         if (!userId && req.headers['x-user-id']) {
             userId = req.headers['x-user-id'].replace(/"/g, '');
         }
-
-        const db = await connectToDatabase();
 
         // =========================
         // ✅ GET ORDERS

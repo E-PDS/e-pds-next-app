@@ -59,8 +59,13 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 export default function HeaderSidebar({ children }) {
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const router = useRouter();
   const pathname = usePathname();
+
+  React.useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const cartItems = useSelector((state) => {
     const activeTab = state.cart.tabs.find((t) => t.id === state.cart.activeTabId);
@@ -80,6 +85,10 @@ export default function HeaderSidebar({ children }) {
     { label: 'Orders', icon: <ListAltIcon />, path: '/orders' },
     { label: 'Account', icon: <PersonIcon />, path: '/account' },
   ];
+
+  if (!mounted) {
+    return <div style={{ minHeight: '100vh' }}>{children}</div>;
+  }
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', pb: 7 }}>

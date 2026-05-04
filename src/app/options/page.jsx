@@ -39,8 +39,7 @@ export default function OptionsPage() {
     };
 
     const handleQueueClick = () => {
-        // Placeholder for now as requested
-        alert("Virtual Queue details will be updated later.");
+        router.push("/queue");
     };
 
     return (

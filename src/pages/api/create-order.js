@@ -12,9 +12,9 @@ export default async function handler(req, res) {
 
         if (!process.env.RAZORPAY_KEY_ID || !process.env.RAZORPAY_KEY_SECRET) {
             console.error("CRITICAL: Razorpay keys are missing from environment variables!");
-            return res.status(500).json({ 
-                success: false, 
-                message: "Server configuration error: Razorpay keys are missing. Please set RAZORPAY_KEY_ID and RAZORPAY_KEY_SECRET in your environment." 
+            return res.status(500).json({
+                success: false,
+                message: "Server configuration error: Razorpay keys are missing. Please set RAZORPAY_KEY_ID and RAZORPAY_KEY_SECRET in your environment."
             });
         }
 
@@ -80,9 +80,9 @@ export default async function handler(req, res) {
         console.error("❌ CREATE ORDER ERROR:", error);
         console.error("Error Stack:", error.stack);
         console.error("Request Body:", req.body);
-        
-        return res.status(500).json({ 
-            success: false, 
+
+        return res.status(500).json({
+            success: false,
             message: error.message || "Error creating payment order"
         });
     }
