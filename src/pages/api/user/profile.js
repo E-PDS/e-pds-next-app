@@ -7,7 +7,7 @@ export default async function handler(req, res) {
     }
 
     const { userId } = req.body;
-    console.log("Fetching E-Card for userId:", userId);
+    console.log("Fetching profile for userId:", userId);
 
     if (!userId) {
         return res.status(400).json({ status: "Failed", message: "User ID is required" });
@@ -15,21 +15,24 @@ export default async function handler(req, res) {
 
     try {
         const db = await connectToDatabase();
-
+        
         if (!/^[0-9a-fA-F]{24}$/.test(userId)) {
-            console.error("Invalid User ID format for E-Card:", userId);
+            console.error("Invalid User ID format for profile:", userId);
             return res.status(400).json({ status: "Failed", message: "Invalid User ID format" });
         }
 
-        const eCard = await db.collection("e_card").findOne({ userId: new ObjectId(userId) });
+        const user = await db.collection("users").findOne(
+            { _id: new ObjectId(userId) },
+            { projection: { passwordHash: 0 } }
+        );
 
-        if (!eCard) {
-            return res.status(404).json({ status: "Failed", message: "E-Card not found" });
+        if (!user) {
+            return res.status(404).json({ status: "Failed", message: "User not found" });
         }
 
-        return res.status(200).json({ status: "Success", data: eCard });
+        return res.status(200).json({ status: "Success", data: user });
     } catch (error) {
-        console.error("Error fetching E-Card:", error);
+        console.error("Error fetching user profile:", error);
         return res.status(500).json({ status: "Failed", message: "Internal Server Error" });
     }
 }

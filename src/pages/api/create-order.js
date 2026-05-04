@@ -1,0 +1,58 @@
+import Razorpay from "razorpay";
+import connectToDatabase from "@/lib/db";
+
+export default async function handler(req, res) {
+    if (req.method !== "POST") {
+        return res.status(405).json({ success: false, message: "Method not allowed" });
+    }
+
+    try {
+        const { amount, userId, internalOrderId } = req.body;
+        console.log("Create-order request:", { amount, userId, internalOrderId });
+
+        if (!amount || isNaN(amount) || amount <= 0) {
+            return res.status(400).json({ success: false, message: "Invalid amount" });
+        }
+
+        const db = await connectToDatabase();
+        const paymentsCollection = db.collection("payments");
+
+        const razorpay = new Razorpay({
+            key_id: process.env.RAZORPAY_KEY_ID,
+            key_secret: process.env.RAZORPAY_KEY_SECRET,
+        });
+
+        const order = await razorpay.orders.create({
+            amount: Math.round(amount * 100), // ₹ → paise
+            currency: "INR",
+            receipt: `receipt_${Date.now()}`
+        });
+
+        console.log("Razorpay order created:", order.id);
+
+        const paymentRecord = {
+            userId: userId || "GUEST",
+            orderId: internalOrderId || null,
+            razorpayOrderId: order.id,
+            amount,
+            status: "created",
+            createdAt: new Date(),
+            updatedAt: new Date()
+        };
+
+        console.log("Saving Payment record to DB:", paymentRecord);
+        await paymentsCollection.insertOne(paymentRecord);
+        console.log("Payment record saved successfully.");
+
+        return res.status(200).json({
+            success: true,
+            id: order.id,
+            amount: order.amount,
+            currency: order.currency
+        });
+
+    } catch (error) {
+        console.error("CREATE ORDER ERROR:", error);
+        return res.status(500).json({ success: false, message: error.message || "Error creating payment order" });
+    }
+}

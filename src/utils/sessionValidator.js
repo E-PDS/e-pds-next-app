@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 
 export async function validateSession(request) {
-  const token = request.headers.get('sessiontoken');
+  const token = request.headers.get('sessiontoken') || request.headers.get('sessionToken') || request.headers.get('x-session-token');
 
   if (!token) {
     console.log("sessionValidator: No session token provided");

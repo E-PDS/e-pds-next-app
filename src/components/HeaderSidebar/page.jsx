@@ -76,7 +76,7 @@ export default function HeaderSidebar({ children }) {
   };
 
   const navItems = [
-    { label: 'Home', icon: <HomeIcon />, path: '/products' },
+    { label: 'Home', icon: <HomeIcon />, path: '/options' },
     { label: 'Orders', icon: <ListAltIcon />, path: '/orders' },
     { label: 'Account', icon: <PersonIcon />, path: '/account' },
   ];

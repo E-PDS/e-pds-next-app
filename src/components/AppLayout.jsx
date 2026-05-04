@@ -8,7 +8,7 @@ export default function AppLayout({ children }) {
   const pathname = usePathname();
 
   // Full screen routes don't need the HeaderSidebar
-  const fullScreenRoutes = ['/login', '/signup', '/select-store', '/access-denied', '/ForgotPassword', '/ResetPassword', '/'];
+  const fullScreenRoutes = ['/login', '/signup', '/select-store', '/options', '/access-denied', '/ForgotPassword', '/ResetPassword', '/'];
   const isFullScreenRoute = fullScreenRoutes.includes(pathname);
 
   if (isFullScreenRoute) {

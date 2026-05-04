@@ -1,3 +1,5 @@
+@use "sass:color";
+
 // Apply the exact colors from RULES.md
 $bg-slate-50: #f8fafc;
 $card-bg: #ffffff;
@@ -239,7 +241,7 @@ $error-bg: #fee2e2;
       transition: color 0.2s;
 
       &:hover {
-        color: darken($brand-accent-glow, 15%);
+        color: color.adjust($brand-accent-glow, $lightness: -15%);
         text-decoration: underline;
       }
     }
@@ -261,7 +263,7 @@ $error-bg: #fee2e2;
     &:hover:not(:disabled) {
       transform: translateY(-2px);
       box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
-      background: lighten($text-dark, 10%);
+      background: color.adjust($text-dark, $lightness: 10%);
     }
 
     &:active:not(:disabled) {
@@ -405,7 +407,7 @@ $error-bg: #fee2e2;
         box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
 
         .feature-icon {
-          color: lighten($brand-accent-glow, 15%);
+          color: color.adjust($brand-accent-glow, $lightness: 15%);
           transform: scale(1.1);
         }
       }

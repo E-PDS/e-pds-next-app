@@ -29,6 +29,13 @@ export default async function handler(req, res) {
                 const stockInfo = stockItems.find(s => s.productId.toString() === product._id.toString());
                 const stockQty = stockInfo ? stockInfo.quantity : 0;
                 
+                // Smart icon logic
+                let icon = 'package';
+                const name = (product.productName || '').toLowerCase();
+                if (name.includes('rice') || name.includes('wheat') || name.includes('grain')) icon = 'wheat';
+                else if (name.includes('oil') || name.includes('kerosene') || name.includes('liquid')) icon = 'droplet';
+                else if (name.includes('gas') || name.includes('lpg') || name.includes('stove')) icon = 'flame';
+
                 return {
                     id: product._id.toString(),
                     name: product.productName,
@@ -37,7 +44,7 @@ export default async function handler(req, res) {
                     unit: product.unit || 'pcs',
                     stock: stockQty,
                     inStock: stockQty > 0,
-                    icon: 'package' // Default icon or from product if exists
+                    icon: icon
                 };
             });
 

@@ -78,7 +78,7 @@ export default function Login() {
         if (sessionData) {
           dispatch(setUserSession(sessionData));
         }
-        router.push('/select-store', { scroll: false });
+        router.push('/options', { scroll: false });
       } else {
         setAlertOpen(true);
       }

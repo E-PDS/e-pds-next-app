@@ -1,13 +1,46 @@
 "use client";
+
 import React, { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { useSelector } from "react-redux";
 import useAuthAxios from "@/hooks/useAuthAxios";
 import "./page.scss";
-import { CircularProgress, Box, Typography, Card, CardContent, Chip, Divider, Grid } from "@mui/material";
-import LocalShippingIcon from '@mui/icons-material/LocalShipping';
-import ShoppingBagIcon from '@mui/icons-material/ShoppingBag';
+
+// Lucide-like SVG Icons
+const Package = ({ size = 24, className = "" }) => (
+    <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+        <path d="m7.5 4.27 9 5.15"/><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/>
+    </svg>
+);
+
+const Clock = ({ size = 24, className = "" }) => (
+    <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+        <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+    </svg>
+);
+
+const CheckCircle = ({ size = 24, className = "" }) => (
+    <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>
+    </svg>
+);
+
+const ChevronRight = ({ size = 24, className = "" }) => (
+    <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+        <path d="m9 18 6-6-6-6"/>
+    </svg>
+);
+
+const ShoppingBag = ({ size = 64, className = "" }) => (
+    <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+        <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/>
+    </svg>
+);
 
 export default function OrdersPage() {
+    const user = useSelector(state => state.auth.user);
     const authAxios = useAuthAxios();
+    const router = useRouter();
     const [orders, setOrders] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
@@ -29,87 +62,127 @@ export default function OrdersPage() {
             }
         };
 
-        fetchOrders();
-    }, []);
+        if (user?.sessionToken) {
+            fetchOrders();
+        } else {
+            // Wait for user session or redirect if definitely not logged in
+            const timeout = setTimeout(() => {
+                if (loading) setLoading(false);
+            }, 2000);
+            return () => clearTimeout(timeout);
+        }
+    }, [authAxios, user, loading]);
 
-    const getStatusColor = (status) => {
-        switch (status?.toLowerCase()) {
-            case 'pending': return 'warning';
-            case 'completed': return 'success';
-            case 'cancelled': return 'error';
-            default: return 'default';
+    const getStatusInfo = (status) => {
+        const s = status?.toLowerCase();
+        switch (s) {
+            case 'pending': return { label: 'Processing', class: 'status-pending', icon: <Clock size={14} /> };
+            case 'paid': return { label: 'Paid & Processing', class: 'status-paid', icon: <CheckCircle size={14} /> };
+            case 'completed': return { label: 'Order Completed', class: 'status-completed', icon: <CheckCircle size={14} /> };
+            case 'cancelled': return { label: 'Cancelled', class: 'status-cancelled', icon: null };
+            default: return { label: status || 'Pending', class: 'status-default', icon: null };
         }
     };
 
     if (loading) {
         return (
-            <Box display="flex" justifyContent="center" alignItems="center" minHeight="60vh">
-                <CircularProgress />
-            </Box>
-        );
-    }
-
-    if (error) {
-        return (
-            <Box p={3}>
-                <Typography color="error">{error}</Typography>
-            </Box>
+            <div className="orders-loading">
+                <div className="pulse-loader"></div>
+                <p>Retrieving your orders...</p>
+            </div>
         );
     }
 
     return (
         <div className="orders-page-container">
-            <Typography variant="h4" fontWeight="bold" gutterBottom>
-                My Orders
-            </Typography>
+            <header className="orders-header">
+                <div className="header-text">
+                    <h1>My Purchase History</h1>
+                    <p>Track and manage your recent PDS orders</p>
+                </div>
+                <div className="order-stats">
+                    <div className="stat-card">
+                        <span className="stat-value">{orders.length}</span>
+                        <span className="stat-label">Total Orders</span>
+                    </div>
+                </div>
+            </header>
+
+            {error && <div className="error-alert">{error}</div>}
 
             {orders.length === 0 ? (
-                <Box display="flex" flexDirection="column" alignItems="center" justifyContent="center" py={8} opacity={0.6}>
-                    <ShoppingBagIcon sx={{ fontSize: 80, mb: 2 }} color="disabled" />
-                    <Typography variant="h6">No orders found</Typography>
-                </Box>
+                <div className="empty-orders">
+                    <div className="empty-icon-bg">
+                        <ShoppingBag className="empty-icon" />
+                    </div>
+                    <h2>No orders found yet</h2>
+                    <p>Start shopping to see your purchase history here.</p>
+                    <button onClick={() => router.push('/options')} className="shop-now-btn">
+                        Explore Stores
+                    </button>
+                </div>
             ) : (
                 <div className="orders-list">
-                    {orders.map((order) => (
-                        <Card key={order._id} className="order-card" variant="outlined">
-                            <CardContent>
-                                <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
-                                    <Typography variant="subtitle2" color="textSecondary">
-                                        Order #{order._id?.substring(order._id.length - 8).toUpperCase()}
-                                    </Typography>
-                                    <Chip
-                                        label={order.status?.toUpperCase() || 'UNKNOWN'}
-                                        color={getStatusColor(order.status)}
-                                        size="small"
-                                        className="status-chip"
-                                    />
-                                </Box>
-                                <Divider sx={{ mb: 2 }} />
+                    {orders.map((order) => {
+                        const statusInfo = getStatusInfo(order.status);
+                        const date = new Date(order.createdAt);
+                        
+                        return (
+                            <div key={order._id} className="order-card-premium">
+                                <div className="order-card-header">
+                                    <div className="order-id-group">
+                                        <Package className="pkg-icon" size={20} />
+                                        <div>
+                                            <span className="order-id-label">Order ID</span>
+                                            <h3 className="order-id-value">#{order._id?.substring(order._id.length - 8).toUpperCase()}</h3>
+                                        </div>
+                                    </div>
+                                    <div className={`status-badge-premium ${statusInfo.class}`}>
+                                        {statusInfo.icon}
+                                        <span>{statusInfo.label}</span>
+                                    </div>
+                                </div>
 
-                                <Grid container spacing={2}>
-                                    <Grid item xs={12} sm={8}>
-                                        <Typography variant="body1" fontWeight="bold">
-                                            {order.items?.length || 0} {order.items?.length === 1 ? 'Item' : 'Items'}
-                                        </Typography>
-                                        <Typography variant="body2" color="textSecondary">
-                                            Ordered on {new Date(order.createdAt).toLocaleDateString()} at {new Date(order.createdAt).toLocaleTimeString()}
-                                        </Typography>
-                                        <Typography variant="body2" color="textSecondary" sx={{ mt: 1 }}>
-                                            Total Amount: <span style={{ fontWeight: 'bold', color: '#000' }}>₹{order.totalAmount}</span>
-                                        </Typography>
-                                    </Grid>
-                                    <Grid item xs={12} sm={4} display="flex" justifyContent="flex-end" alignItems="flex-end">
-                                        <Box display="flex" alignItems="center" gap={1} color="text.secondary">
-                                            <LocalShippingIcon fontSize="small" />
-                                            <Typography variant="caption">
-                                                {order.deliveryAddress?.city || 'Delivery'}
-                                            </Typography>
-                                        </Box>
-                                    </Grid>
-                                </Grid>
-                            </CardContent>
-                        </Card>
-                    ))}
+                                <div className="order-card-body">
+                                    <div className="order-info-grid">
+                                        <div className="info-item">
+                                            <span className="info-label">Date</span>
+                                            <span className="info-value">
+                                                {isNaN(date.getTime()) 
+                                                    ? 'Recent Order' 
+                                                    : date.toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })}
+                                            </span>
+                                        </div>
+                                        <div className="info-item">
+                                            <span className="info-label">Items</span>
+                                            <span className="info-value">{order.items?.length || 0} Products</span>
+                                        </div>
+                                        <div className="info-item">
+                                            <span className="info-label">Total Amount</span>
+                                            <span className="info-value price">₹{order.totalAmount}</span>
+                                        </div>
+                                    </div>
+
+                                    <div className="order-items-preview">
+                                        {order.items?.slice(0, 3).map((item, idx) => (
+                                            <div key={idx} className="preview-dot"></div>
+                                        ))}
+                                        {order.items?.length > 3 && <span className="more-items">+{order.items.length - 3} more</span>}
+                                    </div>
+                                </div>
+
+                                <div className="order-card-footer">
+                                    <div className="delivery-summary">
+                                        <span className="delivery-to">Delivering to</span>
+                                        <span className="delivery-city">{order.deliveryAddress?.city || 'Registered Address'}</span>
+                                    </div>
+                                    <button className="view-details-btn">
+                                        View Details <ChevronRight size={16} />
+                                    </button>
+                                </div>
+                            </div>
+                        );
+                    })}
                 </div>
             )}
         </div>
