@@ -10,6 +10,14 @@ export default async function handler(req, res) {
         const { amount, userId, internalOrderId } = req.body;
         console.log("Create-order request:", { amount, userId, internalOrderId });
 
+        if (!process.env.RAZORPAY_KEY_ID || !process.env.RAZORPAY_KEY_SECRET) {
+            console.error("CRITICAL: Razorpay keys are missing from environment variables!");
+            return res.status(500).json({ 
+                success: false, 
+                message: "Server configuration error: Razorpay keys are missing. Please set RAZORPAY_KEY_ID and RAZORPAY_KEY_SECRET in your environment." 
+            });
+        }
+
         if (!amount || isNaN(amount) || amount <= 0) {
             return res.status(400).json({ success: false, message: "Invalid amount" });
         }
