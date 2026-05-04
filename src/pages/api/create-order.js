@@ -17,16 +17,28 @@ export default async function handler(req, res) {
         const db = await connectToDatabase();
         const paymentsCollection = db.collection("payments");
 
-        const razorpay = new Razorpay({
-            key_id: process.env.RAZORPAY_KEY_ID,
-            key_secret: process.env.RAZORPAY_KEY_SECRET,
-        });
+        let razorpay;
+        try {
+            razorpay = new Razorpay({
+                key_id: process.env.RAZORPAY_KEY_ID,
+                key_secret: process.env.RAZORPAY_KEY_SECRET,
+            });
+        } catch (rzpInitErr) {
+            console.error("Razorpay Init Error:", rzpInitErr);
+            throw new Error("Failed to initialize payment gateway: " + rzpInitErr.message);
+        }
 
-        const order = await razorpay.orders.create({
-            amount: Math.round(amount * 100), // ₹ → paise
-            currency: "INR",
-            receipt: `receipt_${Date.now()}`
-        });
+        let order;
+        try {
+            order = await razorpay.orders.create({
+                amount: Math.round(amount * 100), // ₹ → paise
+                currency: "INR",
+                receipt: `receipt_${Date.now()}`
+            });
+        } catch (rzpOrderErr) {
+            console.error("Razorpay Order Creation Error:", rzpOrderErr);
+            throw new Error("Razorpay Error: " + (rzpOrderErr.description || rzpOrderErr.message));
+        }
 
         console.log("Razorpay order created:", order.id);
 
@@ -40,9 +52,14 @@ export default async function handler(req, res) {
             updatedAt: new Date()
         };
 
-        console.log("Saving Payment record to DB:", paymentRecord);
-        await paymentsCollection.insertOne(paymentRecord);
-        console.log("Payment record saved successfully.");
+        try {
+            console.log("Saving Payment record to DB:", paymentRecord);
+            await paymentsCollection.insertOne(paymentRecord);
+            console.log("Payment record saved successfully.");
+        } catch (dbErr) {
+            console.error("Database Insertion Error:", dbErr);
+            throw new Error("Failed to save payment record to database: " + dbErr.message);
+        }
 
         return res.status(200).json({
             success: true,

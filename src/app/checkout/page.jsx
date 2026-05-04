@@ -114,6 +114,10 @@ export default function CheckoutPage() {
             return setError("Please fill in all required address fields.");
         }
 
+        if (isNaN(totalPrice) || totalPrice <= 0) {
+            return setError("Invalid total amount. Please check your cart.");
+        }
+
         setLoading(true);
         setError("");
 
@@ -207,7 +211,8 @@ export default function CheckoutPage() {
 
         } catch (err) {
             console.error("Order process error:", err);
-            setError(err.message || "Something went wrong");
+            const serverMsg = err.response?.data?.message;
+            setError(serverMsg || err.message || "Something went wrong");
         } finally {
             setLoading(false);
         }
