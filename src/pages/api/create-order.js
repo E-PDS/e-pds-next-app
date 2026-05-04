@@ -52,7 +52,13 @@ export default async function handler(req, res) {
         });
 
     } catch (error) {
-        console.error("CREATE ORDER ERROR:", error);
-        return res.status(500).json({ success: false, message: error.message || "Error creating payment order" });
+        console.error("❌ CREATE ORDER ERROR:", error);
+        console.error("Error Stack:", error.stack);
+        console.error("Request Body:", req.body);
+        
+        return res.status(500).json({ 
+            success: false, 
+            message: error.message || "Error creating payment order"
+        });
     }
 }

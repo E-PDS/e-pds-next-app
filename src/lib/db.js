@@ -10,8 +10,8 @@ if (typeof dns.setServers === 'function') {
   }
 }
 
-const uri = process.env.DB_URI;
-const dbName = process.env.DB;
+const uri = process.env.MONGODB_URI || process.env.DB_URI;
+const dbName = process.env.DB || "EPDS_DB";
 
 let cached = global._mongo;
 
