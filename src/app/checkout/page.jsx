@@ -165,6 +165,10 @@ export default function CheckoutPage() {
 
             const razorpayOrder = razorRes.data;
 
+            if (!process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID) {
+                throw new Error("Frontend configuration error: NEXT_PUBLIC_RAZORPAY_KEY_ID is missing.");
+            }
+
             if (!isRazorpayLoaded && !window.Razorpay) {
                 throw new Error("Razorpay SDK not loaded. Please wait a moment and try again.");
             }
@@ -189,7 +193,8 @@ export default function CheckoutPage() {
                         }
                     } catch (vErr) {
                         console.error("Verification error:", vErr);
-                        setError("An error occurred during payment verification.");
+                        const vServerMsg = vErr.response?.data?.message;
+                        setError(vServerMsg || "An error occurred during payment verification.");
                     } finally {
                         setLoading(false);
                     }
@@ -206,8 +211,13 @@ export default function CheckoutPage() {
                 }
             };
 
-            const rzp = new window.Razorpay(options);
-            rzp.open();
+            try {
+                const rzp = new window.Razorpay(options);
+                rzp.open();
+            } catch (rzpErr) {
+                console.error("Razorpay Modal Error:", rzpErr);
+                throw new Error("Failed to open Razorpay modal: " + rzpErr.message);
+            }
 
         } catch (err) {
             console.error("Order process error:", err);
