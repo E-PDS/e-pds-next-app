@@ -26,7 +26,7 @@ export default function PaymentPage() {
             key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
             amount: order.amount,
             currency: "INR",
-            name: "E-PDS",
+            name: "E - PUBLIC DISTRIBUTION SYSTEMS",
             order_id: order.id,
 
             handler: async function (response) {

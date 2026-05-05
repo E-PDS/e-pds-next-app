@@ -15,7 +15,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  title: "E-PDS",
+  title: "E - PUBLIC DISTRIBUTION SYSTEMS",
   description: "Electronic Public Distribution System",
 };
 

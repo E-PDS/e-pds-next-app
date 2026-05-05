@@ -62,6 +62,7 @@ export default function CheckoutPage() {
     const [showSuccessDialog, setShowSuccessDialog] = useState(false);
     const [profileLoaded, setProfileLoaded] = useState(false);
     const [paymentMethod, setPaymentMethod] = useState("online");
+    const [deliveryType, setDeliveryType] = useState("pickup");
     const [isRazorpayLoaded, setIsRazorpayLoaded] = useState(false);
     const [completedOrder, setCompletedOrder] = useState(null);
 
@@ -134,6 +135,8 @@ export default function CheckoutPage() {
                 })),
                 totalAmount: totalPrice,
                 deliveryAddress: address,
+                deliveryType: deliveryType,
+                paymentMethod: paymentMethod
             });
 
             if (!orderRes.data.success) {
@@ -145,7 +148,8 @@ export default function CheckoutPage() {
                 orderId: internalOrderId,
                 items: [...cartItems],
                 totalAmount: totalPrice,
-                paymentMethod: paymentMethod === 'online' ? 'Online' : 'Cash on Delivery'
+                paymentMethod: paymentMethod === 'online' ? 'Online' : 'Cash on Delivery',
+                deliveryType: deliveryType === 'home_delivery' ? 'Home Delivery' : 'Self Pickup'
             };
 
             // 2. Handle Payment
@@ -177,8 +181,8 @@ export default function CheckoutPage() {
                 key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
                 amount: razorpayOrder.amount,
                 currency: "INR",
-                name: "E-PDS",
-                description: `Order Payment for ${selectedStore?.shopName || 'E-PDS'}`,
+                name: "E - PUBLIC DISTRIBUTION SYSTEMS",
+                description: `Order Payment for ${selectedStore?.shopName || 'E - PUBLIC DISTRIBUTION SYSTEMS'}`,
                 order_id: razorpayOrder.id,
                 handler: async function (response) {
                     setLoading(true);
@@ -302,6 +306,29 @@ export default function CheckoutPage() {
                                 </div>
                             </div>
 
+                            <div className="delivery-type-section" style={{ marginTop: '2.5rem', paddingTop: '2rem', borderTop: '1px solid #f1f5f9' }}>
+                                <div className="section-title">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="title-icon"><path d="M10 17h4V5H2v12h3m15 0h2v-3.34a2 2 0 0 0-.59-1.42L17.5 7H14"/><circle cx="7.5" cy="17.5" r="2.5"/><circle cx="17.5" cy="17.5" r="2.5"/></svg>
+                                    <h2>Delivery Method</h2>
+                                </div>
+                                <div className="payment-options">
+                                    <label className={`payment-option ${deliveryType === 'pickup' ? 'active' : ''}`}>
+                                        <input type="radio" name="deliveryType" value="pickup" checked={deliveryType === 'pickup'} onChange={() => setDeliveryType('pickup')} />
+                                        <div className="option-content">
+                                            <span className="option-title">Self Pickup</span>
+                                            <span className="option-desc">Visit the store to collect items</span>
+                                        </div>
+                                    </label>
+                                    <label className={`payment-option ${deliveryType === 'home_delivery' ? 'active' : ''}`}>
+                                        <input type="radio" name="deliveryType" value="home_delivery" checked={deliveryType === 'home_delivery'} onChange={() => setDeliveryType('home_delivery')} />
+                                        <div className="option-content">
+                                            <span className="option-title">Home Delivery</span>
+                                            <span className="option-desc">Get items delivered to your home</span>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+
                             <div className="payment-method-section">
                                 <div className="section-title">
                                     <CreditCard size={24} className="title-icon" />
@@ -410,6 +437,11 @@ export default function CheckoutPage() {
                             <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '8px' }}>
                                 <span style={{ color: '#64748b', fontSize: '0.9rem' }}>Payment Method:</span>
                                 <span style={{ fontWeight: 600, color: '#10b981' }}>{completedOrder?.paymentMethod}</span>
+                            </div>
+
+                            <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '8px' }}>
+                                <span style={{ color: '#64748b', fontSize: '0.9rem' }}>Delivery Type:</span>
+                                <span style={{ fontWeight: 600, color: '#3b82f6' }}>{completedOrder?.deliveryType}</span>
                             </div>
                         </div>
                     </Box>

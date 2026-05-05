@@ -122,7 +122,7 @@ export default function Signup() {
         {/* Left Side - Brands */}
         <div className="branding-panel" style={{ order: 0 }}>
           <div className="branding-content-box">
-            <h2 className="brand-title">E-PDS Enterprise</h2>
+            <h2 className="brand-title">E - PUBLIC DISTRIBUTION SYSTEMS Enterprise</h2>
             <h3 className="brand-subtitle">Public Distribution System Suite</h3>
 
             <span className="pro-badge">Kerala Govt. Integrated Edition</span>
@@ -163,7 +163,7 @@ export default function Signup() {
                 <Store size={40} className="brand-logo" />
               </div>
               <h1 className="welcome-text">Create Account</h1>
-              <p className="welcome-subtext">Join the E-PDS Management Suite</p>
+              <p className="welcome-subtext">Join the E - PUBLIC DISTRIBUTION SYSTEMS Management Suite</p>
             </div>
 
             <div className="login-card">

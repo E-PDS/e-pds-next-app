@@ -101,7 +101,7 @@ export default function Login() {
                 <Store size={40} className="brand-logo" />
               </div>
               <h1 className="welcome-text">Welcome Back</h1>
-              <p className="welcome-subtext">Access your E-PDS dashboard</p>
+              <p className="welcome-subtext">Access your E - PUBLIC DISTRIBUTION SYSTEMS dashboard</p>
             </div>
 
             <div className="login-card">
@@ -184,7 +184,7 @@ export default function Login() {
         {/* Right Side - Branding & Features */}
         <div className="branding-panel">
           <div className="branding-content-box">
-            <h2 className="brand-title">E-PDS Enterprise</h2>
+            <h2 className="brand-title">E - PUBLIC DISTRIBUTION SYSTEMS Enterprise</h2>
             <h3 className="brand-subtitle">Public Distribution System Suite</h3>
 
             <span className="pro-badge">Kerala Govt. Integrated Edition</span>

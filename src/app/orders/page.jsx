@@ -37,6 +37,12 @@ const ShoppingBag = ({ size = 64, className = "" }) => (
     </svg>
 );
 
+const Truck = ({ size = 24, className = "" }) => (
+    <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+        <path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"/><circle cx="7" cy="18" r="2"/><path d="M9 18h6"/><circle cx="17" cy="18" r="2"/><path d="M19 18h2a1 1 0 0 0 1-1v-5l-3-3h-3.5"/><path d="M16.5 10.5 19 10.5"/>
+    </svg>
+);
+
 export default function OrdersPage() {
     const user = useSelector(state => state.auth.user);
     const authAxios = useAuthAxios();
@@ -76,8 +82,12 @@ export default function OrdersPage() {
     const getStatusInfo = (status) => {
         const s = status?.toLowerCase();
         switch (s) {
-            case 'pending': return { label: 'Processing', class: 'status-pending', icon: <Clock size={14} /> };
+            case 'pending': return { label: 'Order Placed', class: 'status-pending', icon: <Clock size={14} /> };
             case 'paid': return { label: 'Paid & Processing', class: 'status-paid', icon: <CheckCircle size={14} /> };
+            case 'accepted': return { label: 'Agent Assigned', class: 'status-accepted', icon: <Package size={14} /> };
+            case 'picked_up': return { label: 'Picked Up', class: 'status-picked-up', icon: <Truck size={14} /> };
+            case 'out_for_delivery': return { label: 'Out for Delivery', class: 'status-out-for-delivery', icon: <Truck size={14} /> };
+            case 'delivered': return { label: 'Delivered', class: 'status-delivered', icon: <CheckCircle size={14} /> };
             case 'completed': return { label: 'Order Completed', class: 'status-completed', icon: <CheckCircle size={14} /> };
             case 'cancelled': return { label: 'Cancelled', class: 'status-cancelled', icon: null };
             default: return { label: status || 'Pending', class: 'status-default', icon: null };

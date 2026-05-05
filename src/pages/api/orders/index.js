@@ -57,10 +57,9 @@ export default async function handler(req, res) {
             return res.status(200).json({ success: true, data: orders });
         }
 
-        // =========================
         // ✅ CREATE ORDER
         // =========================
-        const { storeId, items, totalAmount, deliveryAddress } = req.body;
+        const { storeId, items, totalAmount, deliveryAddress, deliveryType, paymentMethod } = req.body;
 
         // 🔹 Validation
         if (!storeId || !items?.length || !deliveryAddress) {
@@ -108,6 +107,10 @@ export default async function handler(req, res) {
             totalAmount,
             status: "pending",
             deliveryAddress,
+            deliveryType: deliveryType || "pickup",
+            deliveryStatus: (deliveryType === "home_delivery") ? "pending" : "not_applicable",
+            paymentMethod: paymentMethod || "online",
+            deliveryAgentId: null,
             createdAt: new Date(),
             updatedAt: new Date()
         };

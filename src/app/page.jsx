@@ -36,7 +36,7 @@ export default function Home() {
       {/* Layer 1: Hero Section */}
       <section className={styles.hero}>
         <nav className={styles.navbar}>
-          <div className={styles.logo}>E-PDS</div>
+          <div className={styles.logo}>E - PUBLIC DISTRIBUTION SYSTEMS</div>
           <div className={styles.navLinks}>
             <Link href="/">Home</Link>
             <Link href="#about">About</Link>

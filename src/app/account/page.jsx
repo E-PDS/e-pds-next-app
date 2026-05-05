@@ -120,7 +120,7 @@ export default function Account() {
                 <div className="header-content">
                     <div className="title-section">
                         <h1>My Account</h1>
-                        <p>Digital Identity & E-PDS Profile</p>
+                        <p>Digital Identity & E - PUBLIC DISTRIBUTION SYSTEMS Profile</p>
                     </div>
                     <button className="logout-btn" onClick={handleLogout} title="Sign Out">
                         <Icons.LogOut />
@@ -157,7 +157,7 @@ export default function Account() {
                                 <div className="card-top">
                                     <div className="pds-brand">
                                         <span className="logo-dot"></span>
-                                        E-PDS KERALA
+                                        E - PUBLIC DISTRIBUTION SYSTEMS KERALA
                                     </div>
                                     <div className="card-badge">{eCard.priority}</div>
                                 </div>

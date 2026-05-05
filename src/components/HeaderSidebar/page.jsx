@@ -106,8 +106,8 @@ export default function HeaderSidebar({ children }) {
             <MenuIcon />
           </IconButton>
 
-          <Typography variant="h6" noWrap component="div" sx={{ display: { xs: 'none', sm: 'block' } }}>
-            E-PDS
+          <Typography variant="h6" noWrap component="div" sx={{ display: { xs: 'none', sm: 'block' }, fontWeight: 800, letterSpacing: '-0.5px' }}>
+            E - PUBLIC DISTRIBUTION SYSTEMS
           </Typography>
 
           <SearchContainer sx={{ flexGrow: 1, maxWidth: 600 }}>
